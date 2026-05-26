@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MacDonald-Miller Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Narrow:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================
+     MACDONALD-MILLER DESIGN SYSTEM
+     Inspired by macmiller.com — industrial,
+     human, Pacific Northwest, 60 years strong
+     ============================================ */
+
+  :root {
+    /* Brand */
+    --mm-red:        #C8102E;   /* primary accent — used sparingly, with intent */
+    --mm-red-dark:   #9A0C24;
+    --mm-red-tint:   #FCE8EB;
+
+    /* Neutrals — industrial, slightly warm */
+    --mm-ink:        #0F1419;   /* near-black, primary text */
+    --mm-graphite:   #2A2F36;
+    --mm-steel:      #5C6470;
+    --mm-zinc:       #98A0AB;
+    --mm-fog:        #D8DCE0;
+    --mm-paper:      #F4F2EE;   /* warm off-white background */
+    --mm-bone:       #EAE6DE;
+    --mm-white:      #FFFFFF;
+
+    /* Support */
+    --mm-blueprint:  #1E3A5F;   /* deep blue — schematics, sustainability */
+    --mm-amber:      #E8A33D;   /* warning / safety-vest hint */
+    --mm-pine:       #2D5538;   /* sustainability accent */
+
+    /* Type */
+    --font-display:  'Archivo', system-ui, sans-serif;
+    --font-narrow:   'Archivo Narrow', sans-serif;
+    --font-mono:     'JetBrains Mono', ui-monospace, monospace;
+
+    /* Scale */
+    --gutter: clamp(1.25rem, 2.5vw, 2rem);
+    --rule:   1px solid var(--mm-ink);
+    --rule-fog: 1px solid var(--mm-fog);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-display);
+    background: var(--mm-paper);
+    color: var(--mm-ink);
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* subtle blueprint grid */
+    background-image:
+      linear-gradient(to right, rgba(15,20,25,0.025) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(15,20,25,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* ============================================
+     LAYOUT — HEADER STRIP
+     ============================================ */
+  .ds-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--mm-ink);
+    color: var(--mm-paper);
+    border-bottom: 4px solid var(--mm-red);
+  }
+  .ds-header-inner {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 1rem var(--gutter);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+  .ds-mark {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+  }
+  .ds-mark-glyph {
+    width: 40px; height: 40px;
+    background: var(--mm-red);
+    color: var(--mm-paper);
+    display: grid; place-items: center;
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 1.125rem;
+    letter-spacing: -0.04em;
+    position: relative;
+  }
+  .ds-mark-glyph::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    border: 1px solid rgba(255,255,255,0.4);
+  }
+  .ds-mark-text {
+    font-family: var(--font-narrow);
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.1;
+  }
+  .ds-mark-text small {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--mm-zinc);
+    letter-spacing: 0.15em;
+    margin-top: 2px;
+  }
+  .ds-nav {
+    display: flex;
+    gap: 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .ds-nav a {
+    color: var(--mm-fog);
+    text-decoration: none;
+    transition: color 0.15s;
+    position: relative;
+  }
+  .ds-nav a:hover { color: var(--mm-red); }
+  .ds-nav a::before {
+    content: counter(navcount, decimal-leading-zero);
+    counter-increment: navcount;
+    color: var(--mm-red);
+    margin-right: 6px;
+    font-weight: 600;
+  }
+  .ds-nav { counter-reset: navcount; }
+
+  @media (max-width: 800px) {
+    .ds-nav { display: none; }
+  }
+
+  /* ============================================
+     HERO
+     ============================================ */
+  .ds-hero {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 5rem var(--gutter) 4rem;
+    position: relative;
+  }
+  .ds-hero-meta {
+    display: flex;
+    gap: 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--mm-steel);
+    margin-bottom: 2.5rem;
+    padding-bottom: 1rem;
+    border-bottom: var(--rule);
+    flex-wrap: wrap;
+  }
+  .ds-hero-meta span strong {
+    color: var(--mm-ink);
+    font-weight: 600;
+    margin-left: 6px;
+  }
+  .ds-hero h1 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(3rem, 9vw, 7.5rem);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+    color: var(--mm-ink);
+    margin-bottom: 2rem;
+  }
+  .ds-hero h1 em {
+    font-style: normal;
+    color: var(--mm-red);
+    font-weight: 900;
+    position: relative;
+    display: inline-block;
+  }
+  .ds-hero h1 em::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0.1em;
+    height: 0.08em;
+    background: var(--mm-red);
+    transform: scaleX(0.92);
+    transform-origin: left;
+  }
+  .ds-hero-lede {
+    max-width: 56ch;
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    color: var(--mm-graphite);
+    line-height: 1.55;
+  }
+  .ds-hero-stat {
+    position: absolute;
+    top: 5.5rem;
+    right: var(--gutter);
+    text-align: right;
+    font-family: var(--font-narrow);
+  }
+  .ds-hero-stat .num {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 900;
+    color: var(--mm-red);
+    line-height: 1;
+    letter-spacing: -0.05em;
+  }
+  .ds-hero-stat .lbl {
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.7rem;
+    color: var(--mm-steel);
+    margin-top: 0.5rem;
+  }
+  @media (max-width: 700px) {
+    .ds-hero-stat { display: none; }
+  }
+
+  /* ============================================
+     SECTION FRAMING
+     ============================================ */
+  section.ds-section {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 5rem var(--gutter);
+    border-top: var(--rule);
+  }
+  .ds-section-header {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    align-items: baseline;
+  }
+  .ds-section-number {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--mm-red);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+  .ds-section-title {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+  .ds-section-sub {
+    grid-column: 2;
+    color: var(--mm-steel);
+    max-width: 60ch;
+    margin-top: 0.75rem;
+    font-size: 1.05rem;
+  }
+
+  /* ============================================
+     COLOR SECTION
+     ============================================ */
+  .ds-color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1px;
+    background: var(--mm-ink);
+    border: var(--rule);
+  }
+  .ds-swatch {
+    background: var(--mm-white);
+    padding: 0;
+    aspect-ratio: 1 / 1.1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .ds-swatch:hover { transform: scale(1.02); z-index: 2; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+  .ds-swatch-fill {
+    flex: 1;
+    position: relative;
+  }
+  .ds-swatch-fill::after {
+    content: '';
+    position: absolute;
+    top: 12px; right: 12px;
+    width: 8px; height: 8px;
+    background: currentColor;
+    border-radius: 50%;
+    opacity: 0.5;
+  }
+  .ds-swatch-meta {
+    padding: 1rem 1.125rem 1.25rem;
+    background: var(--mm-white);
+    border-top: var(--rule);
+  }
+  .ds-swatch-meta .name {
+    font-family: var(--font-narrow);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.85rem;
+  }
+  .ds-swatch-meta .hex {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--mm-steel);
+    margin-top: 4px;
+    text-transform: uppercase;
+  }
+  .ds-swatch-meta .role {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--mm-zinc);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 8px;
+  }
+
+  /* ============================================
+     TYPOGRAPHY
+     ============================================ */
+  .ds-type-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .ds-type-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 200px;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: var(--rule-fog);
+    align-items: center;
+  }
+  .ds-type-row:last-child { border-bottom: 0; }
+  .ds-type-label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--mm-steel);
+  }
+  .ds-type-label strong {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--mm-ink);
+    font-size: 0.9rem;
+    text-transform: none;
+    letter-spacing: 0;
+    margin-bottom: 4px;
+  }
+  .ds-type-spec {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--mm-zinc);
+    text-align: right;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .type-h1 { font-family: var(--font-display); font-weight: 800; font-size: 4.5rem; line-height: 0.95; letter-spacing: -0.035em; }
+  .type-h2 { font-family: var(--font-display); font-weight: 800; font-size: 3rem; line-height: 1.02; letter-spacing: -0.03em; }
+  .type-h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.875rem; line-height: 1.15; letter-spacing: -0.015em; }
+  .type-eyebrow { font-family: var(--font-mono); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--mm-red); }
+  .type-lede { font-family: var(--font-display); font-weight: 400; font-size: 1.35rem; line-height: 1.5; color: var(--mm-graphite); }
+  .type-body { font-family: var(--font-display); font-weight: 400; font-size: 1rem; line-height: 1.6; }
+  .type-caption { font-family: var(--font-narrow); font-weight: 500; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--mm-steel); }
+
+  @media (max-width: 800px) {
+    .ds-type-row { grid-template-columns: 1fr; gap: 0.75rem; padding: 1.5rem 0; }
+    .ds-type-spec { text-align: left; }
+    .type-h1 { font-size: 2.75rem; }
+    .type-h2 { font-size: 2rem; }
+  }
+
+  /* ============================================
+     BUTTONS
+     ============================================ */
+  .ds-btn-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 2rem;
+  }
+  .ds-btn-cell {
+    background: var(--mm-white);
+    border: var(--rule);
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+  .ds-btn-cell.dark {
+    background: var(--mm-ink);
+    color: var(--mm-paper);
+    border-color: var(--mm-ink);
+  }
+  .ds-btn-tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--mm-steel);
+  }
+  .ds-btn-cell.dark .ds-btn-tag { color: var(--mm-zinc); }
+
+  .btn {
+    font-family: var(--font-narrow);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.95rem 1.5rem;
+    border: 2px solid;
+    background: transparent;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.18s ease;
+    position: relative;
+  }
+  .btn-arrow {
+    display: inline-block;
+    width: 18px; height: 12px;
+    position: relative;
+    transition: transform 0.2s;
+  }
+  .btn-arrow::before {
+    content: ''; position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 2px; background: currentColor;
+    transform: translateY(-50%);
+  }
+  .btn-arrow::after {
+    content: ''; position: absolute;
+    top: 50%; right: 0;
+    width: 8px; height: 8px;
+    border-top: 2px solid currentColor;
+    border-right: 2px solid currentColor;
+    transform: translateY(-50%) rotate(45deg);
+  }
+  .btn:hover .btn-arrow { transform: translateX(4px); }
+
+  .btn-primary {
+    background: var(--mm-red);
+    color: var(--mm-white);
+    border-color: var(--mm-red);
+  }
+  .btn-primary:hover { background: var(--mm-red-dark); border-color: var(--mm-red-dark); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--mm-ink);
+    border-color: var(--mm-ink);
+  }
+  .btn-secondary:hover { background: var(--mm-ink); color: var(--mm-paper); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--mm-ink);
+    border-color: transparent;
+    border-bottom: 2px solid var(--mm-red);
+    padding: 0.5rem 0;
+  }
+  .btn-ghost:hover { color: var(--mm-red); }
+
+  .btn-inverse {
+    background: var(--mm-paper);
+    color: var(--mm-ink);
+    border-color: var(--mm-paper);
+  }
+  .btn-inverse:hover { background: var(--mm-red); border-color: var(--mm-red); color: var(--mm-white); }
+
+  /* ============================================
+     VALUES (icon cards — matches site values grid)
+     ============================================ */
+  .ds-values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--mm-ink);
+    border: var(--rule);
+  }
+  .ds-value {
+    background: var(--mm-white);
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: background 0.2s;
+  }
+  .ds-value:hover { background: var(--mm-paper); }
+  .ds-value-icon {
+    width: 56px; height: 56px;
+    display: grid; place-items: center;
+    background: var(--mm-red-tint);
+    color: var(--mm-red);
+    border: 2px solid var(--mm-red);
+  }
+  .ds-value-icon svg { width: 28px; height: 28px; }
+  .ds-value h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.01em;
+    margin-top: 0.5rem;
+  }
+  .ds-value p {
+    font-size: 0.925rem;
+    color: var(--mm-graphite);
+    line-height: 1.55;
+  }
+  .ds-value .tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--mm-red);
+  }
+
+  /* ============================================
+     CARDS — project / news patterns
+     ============================================ */
+  .ds-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .ds-card {
+    background: var(--mm-white);
+    border: var(--rule);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .ds-card:hover { transform: translateY(-4px); box-shadow: 0 16px 32px rgba(15,20,25,0.08); }
+  .ds-card-image {
+    aspect-ratio: 3 / 2;
+    background: linear-gradient(135deg, var(--mm-graphite), var(--mm-ink));
+    position: relative;
+    overflow: hidden;
+  }
+  .ds-card-image.healthcare { background: linear-gradient(135deg, var(--mm-blueprint), var(--mm-ink)); }
+  .ds-card-image.energy { background: linear-gradient(135deg, var(--mm-pine), var(--mm-ink)); }
+  .ds-card-image svg {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    opacity: 0.4;
+  }
+  .ds-card-image .badge {
+    position: absolute;
+    top: 1rem; left: 1rem;
+    background: var(--mm-red);
+    color: var(--mm-white);
+    padding: 0.4rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .ds-card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+  }
+  .ds-card-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--mm-steel);
+  }
+  .ds-card h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .ds-card-meta {
+    font-family: var(--font-narrow);
+    font-size: 0.85rem;
+    color: var(--mm-steel);
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: var(--rule-fog);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ds-card-meta .arrow {
+    color: var(--mm-red);
+    font-weight: 700;
+  }
+
+  /* ============================================
+     FORM INPUTS
+     ============================================ */
+  .ds-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    background: var(--mm-white);
+    border: var(--rule);
+    padding: 2.5rem;
+  }
+  .ds-form .full { grid-column: 1 / -1; }
+  .ds-field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .ds-field label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--mm-steel);
+    font-weight: 600;
+  }
+  .ds-field label .req { color: var(--mm-red); }
+  .ds-field input, .ds-field textarea, .ds-field select {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--mm-fog);
+    background: var(--mm-paper);
+    color: var(--mm-ink);
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .ds-field input:focus, .ds-field textarea:focus, .ds-field select:focus {
+    outline: none;
+    border-color: var(--mm-red);
+    background: var(--mm-white);
+    box-shadow: 0 0 0 3px var(--mm-red-tint);
+  }
+  .ds-field textarea { min-height: 100px; resize: vertical; }
+  @media (max-width: 700px) {
+    .ds-form { grid-template-columns: 1fr; padding: 1.5rem; }
+  }
+
+  /* ============================================
+     ICONS / GLYPHS
+     ============================================ */
+  .ds-icons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 1px;
+    background: var(--mm-ink);
+    border: var(--rule);
+  }
+  .ds-icon-cell {
+    background: var(--mm-white);
+    padding: 1.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    text-align: center;
+  }
+  .ds-icon-cell svg {
+    width: 36px; height: 36px;
+    color: var(--mm-red);
+  }
+  .ds-icon-cell .label {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--mm-graphite);
+  }
+
+  /* ============================================
+     PRINCIPLES / VOICE
+     ============================================ */
+  .ds-principles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    background: var(--mm-ink);
+    color: var(--mm-paper);
+    border: var(--rule);
+  }
+  .ds-principle {
+    padding: 3rem 2.5rem;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .ds-principle:nth-child(2n) { border-right: 0; }
+  .ds-principle:nth-last-child(-n+2) { border-bottom: 0; }
+  .ds-principle .num {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--mm-red);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+  }
+  .ds-principle h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: 1.5rem;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
+  }
+  .ds-principle p {
+    color: var(--mm-zinc);
+    font-size: 0.975rem;
+    line-height: 1.55;
+  }
+  @media (max-width: 700px) {
+    .ds-principles { grid-template-columns: 1fr; }
+    .ds-principle { border-right: 0 !important; }
+  }
+
+  /* ============================================
+     VOICE TABLE
+     ============================================ */
+  .ds-voice {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--mm-white);
+    border: var(--rule);
+  }
+  .ds-voice-col {
+    padding: 2rem;
+  }
+  .ds-voice-col:first-child {
+    border-right: var(--rule);
+  }
+  .ds-voice-col h5 {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: var(--rule-fog);
+  }
+  .ds-voice-col.do h5 { color: var(--mm-pine); }
+  .ds-voice-col.dont h5 { color: var(--mm-red); }
+  .ds-voice-col ul {
+    list-style: none;
+    display: flex; flex-direction: column;
+    gap: 0.85rem;
+  }
+  .ds-voice-col li {
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.975rem;
+    color: var(--mm-graphite);
+    line-height: 1.5;
+  }
+  .ds-voice-col.do li::before {
+    content: '✓';
+    position: absolute;
+    left: 0; top: 0;
+    color: var(--mm-pine);
+    font-weight: 700;
+  }
+  .ds-voice-col.dont li::before {
+    content: '✕';
+    position: absolute;
+    left: 0; top: 0;
+    color: var(--mm-red);
+    font-weight: 700;
+  }
+  @media (max-width: 700px) {
+    .ds-voice { grid-template-columns: 1fr; }
+    .ds-voice-col:first-child { border-right: 0; border-bottom: var(--rule); }
+  }
+
+  /* ============================================
+     SPACING SCALE
+     ============================================ */
+  .ds-spacing {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .ds-spacing-row {
+    display: grid;
+    grid-template-columns: 80px 80px 1fr;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0.5rem 0;
+  }
+  .ds-spacing-name {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--mm-ink);
+  }
+  .ds-spacing-px {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--mm-steel);
+  }
+  .ds-spacing-bar {
+    height: 24px;
+    background: var(--mm-red);
+    position: relative;
+  }
+  .ds-spacing-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 4px,
+      rgba(255,255,255,0.15) 4px,
+      rgba(255,255,255,0.15) 8px
+    );
+  }
+
+  /* ============================================
+     CTA STRIP — site signature pattern
+     ============================================ */
+  .ds-cta-strip {
+    background: var(--mm-ink);
+    color: var(--mm-paper);
+    padding: 4rem var(--gutter);
+    margin: 0 calc(-1 * var(--gutter));
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2rem;
+    align-items: center;
+    border-top: 4px solid var(--mm-red);
+  }
+  .ds-cta-strip h3 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+  .ds-cta-strip h3 span { color: var(--mm-red); }
+  .ds-cta-strip .phone {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    color: var(--mm-paper);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+  .ds-cta-strip .phone-row {
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .ds-cta-strip .phone-row small {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--mm-zinc);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+  }
+  @media (max-width: 700px) {
+    .ds-cta-strip { grid-template-columns: 1fr; }
+  }
+
+  /* ============================================
+     FOOTER
+     ============================================ */
+  .ds-foot {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 3rem var(--gutter) 4rem;
+    border-top: var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--mm-steel);
+    flex-wrap: wrap;
+  }
+  .ds-foot strong { color: var(--mm-ink); font-weight: 600; }
+
+  /* ============================================
+     UTILITY
+     ============================================ */
+  .ds-callout {
+    background: var(--mm-bone);
+    border-left: 4px solid var(--mm-red);
+    padding: 1.5rem 2rem;
+    margin-top: 2rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--mm-graphite);
+    line-height: 1.5;
+  }
+  .ds-callout cite {
+    display: block;
+    font-style: normal;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--mm-steel);
+    margin-top: 1rem;
+    font-weight: 600;
+  }
+
+  /* ============================================
+     ENTRANCE ANIMATION
+     ============================================ */
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .ds-hero h1, .ds-hero-lede, .ds-hero-stat {
+    animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  }
+  .ds-hero h1 { animation-delay: 0.1s; }
+  .ds-hero-lede { animation-delay: 0.3s; }
+  .ds-hero-stat { animation-delay: 0.5s; }
+
+</style>
+</head>
+<body>
+
+<!-- ============================================
+     HEADER
+     ============================================ -->
+<header class="ds-header">
+  <div class="ds-header-inner">
+    <div class="ds-mark">
+      <div class="ds-mark-glyph">M</div>
+      <div class="ds-mark-text">
+        MacDonald-Miller
+        <small>Design System / v1.0</small>
+      </div>
+    </div>
+    <nav class="ds-nav">
+      <a href="#foundation">Foundation</a>
+      <a href="#color">Color</a>
+      <a href="#typography">Typography</a>
+      <a href="#components">Components</a>
+      <a href="#voice">Voice</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============================================
+     HERO
+     ============================================ -->
+<section class="ds-hero">
+  <div class="ds-hero-meta">
+    <span>System <strong>MMFS-DS</strong></span>
+    <span>Version <strong>1.0.0</strong></span>
+    <span>Updated <strong>May 2026</strong></span>
+    <span>Heritage <strong>Est. 1965</strong></span>
+  </div>
+  <h1>We Build<br>Systems That<br><em>Work Better.</em></h1>
+  <p class="ds-hero-lede">A design system grounded in 60 years of Pacific Northwest craft. Industrial in its bones, human in its voice — built for the people who show up early, stay late, and resolve issues before they become problems.</p>
+  <div class="ds-hero-stat">
+    <div class="num">60+</div>
+    <div class="lbl">Years of Craft</div>
+  </div>
+</section>
+
+<!-- ============================================
+     FOUNDATION / PRINCIPLES
+     ============================================ -->
+<section class="ds-section" id="foundation">
+  <div class="ds-section-header">
+    <div class="ds-section-number">§ 01 / Foundation</div>
+    <div>
+      <h2 class="ds-section-title">Design Principles</h2>
+      <p class="ds-section-sub">Four principles guide every decision. They reflect how MacDonald-Miller approaches a job site: precise, useful, honest, and deeply human.</p>
+    </div>
+  </div>
+
+  <div class="ds-principles">
+    <div class="ds-principle">
+      <div class="num">— 01</div>
+      <h4>Built, Not Decorated</h4>
+      <p>Every element earns its place. Structure is honest, materials are real, and ornament serves function. The grid is the steel frame — visible when it should be, invisible when it shouldn't.</p>
+    </div>
+    <div class="ds-principle">
+      <div class="num">— 02</div>
+      <h4>Industrial With Warmth</h4>
+      <p>Hard edges, monospaced metadata, and disciplined typography give the system its trade-built character. Warm paper backgrounds and human imagery keep it from feeling cold or corporate.</p>
+    </div>
+    <div class="ds-principle">
+      <div class="num">— 03</div>
+      <h4>Red Means Something</h4>
+      <p>The MM red is structural, not decorative. It marks the primary path, calls attention to the critical action, and signals brand authorship. Used sparingly, it has weight.</p>
+    </div>
+    <div class="ds-principle">
+      <div class="num">— 04</div>
+      <h4>People in the Frame</h4>
+      <p>Buildings are the backdrop — people are the subject. Imagery shows hands at work, faces with names, teams in motion. The product is mechanical; the value is human.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     COLOR
+     ============================================ -->
+<section class="ds-section" id="color">
+  <div class="ds-section-header">
+    <div class="ds-section-number">§ 02 / Color</div>
+    <div>
+      <h2 class="ds-section-title">Palette</h2>
+      <p class="ds-section-sub">A disciplined neutral foundation lets the MacDonald-Miller red carry full weight wherever it appears. Support colors borrow from the trades — blueprint blue, safety amber, pine green.</p>
+    </div>
+  </div>
+
+  <div class="ds-color-grid">
+    <div class="ds-swatch">
+      <div class="ds-swatch-fill" style="background: #C8102E; color: white;"></div>
+      <div class="ds-swatch-meta">
+        <div class="name">MM Red</div>
+        <div class="hex">#C8102E</div>
+        <div class="role">Primary · Brand · CTA</div>
+      </div>
+    </div>
+    <div class="ds-swatch">
+      <div class="ds-swatch-fill" style="background: #9A0C24; color: white;"></div>
+      <div class="ds-swatch-meta">
+        <div class="name">Red Dark</div>
+        <div class="hex">#9A0C24</div>
+        <div class="role">Hover · Active state</div>
+      </div>
+    </div>
+    <div class="ds-swatch">
+      <div class="ds-swatch-fill" style="background: #0F1419; color: white;"></div>
+      <div class="ds-swatch-meta">
+        <div class="name">Ink</div>
+        <div class="hex">#0F1419</div>
+        <div class="role">Headlines · Body text</div>
+      </div>
+    </div>
+    <div class="ds-swatch">
+      <div class="ds-swatch-fill" style="background: #2A2F36; color: white;"></div>
+      <div class="ds-swatch-meta">
+        <div class="name">Graphite</div>
+        <div class="hex">#2A2F36</div>
+        <div class="role">Secondary surfaces</div>
+      </div>
+    </div>
+    <div class="ds-swatch">
+      <div class="ds-swatch-fill" style="background: #5C6470; color: white;"></div>
+      <div class="ds-swatch-meta">
+        <div class="name">Steel</div>
+        <div class="hex">#5C6470</div>
+        <div class="role">Subdued text · Meta</div>
+      </div>
+    </div>
+    <div class="ds-swatch">
+      <div class="ds-swatch-fill" style="background: #98A0AB; color: white;"></div>
+      <div class="ds-swatch-meta">
+        <div class="name">Zinc</div>
+        <div class="hex">#98A0AB</div>
+        <div class="role">Tertiary · Captions</div>
+      </div>
+    </div>
+    <div class="ds-swatch">
+      <div class="ds-swatch-fill" style="background: #D8DCE0; color: #5C6470;"></div>
+      <div class="ds-swatch-meta">
+        <div class="name">Fog</div>
+        <div class="hex">#D8DCE0</div>
+        <div class="role">Borders · Dividers</div>
+      </div>
+    </div>
+    <div class="ds-swatch">
+      <div class="ds-swatch-fill" style="background: #F4F2EE; color: #98A0AB;"></div>
+      <div class="ds-swatch-meta">
+        <div class="name">Paper</div>
+        <div class="hex">#F4F2EE</div>
+        <div class="role">Page background</div>
+      </div>
+    </div>
+    <div class="ds-swatch">
+      <div class="ds-swatch-fill" style="background: #1E3A5F; color: white;"></div>
+      <div class="ds-swatch-meta">
+        <div class="name">Blueprint</div>
+        <div class="hex">#1E3A5F</div>
+        <div class="role">Healthcare · Schematics</div>
+      </div>
+    </div>
+    <div class="ds-swatch">
+      <div class="ds-swatch-fill" style="background: #2D5538; color: white;"></div>
+      <div class="ds-swatch-meta">
+        <div class="name">Pine</div>
+        <div class="hex">#2D5538</div>
+        <div class="role">Sustainability</div>
+      </div>
+    </div>
+    <div class="ds-swatch">
+      <div class="ds-swatch-fill" style="background: #E8A33D; color: white;"></div>
+      <div class="ds-swatch-meta">
+        <div class="name">Amber</div>
+        <div class="hex">#E8A33D</div>
+        <div class="role">Safety · Warning</div>
+      </div>
+    </div>
+    <div class="ds-swatch">
+      <div class="ds-swatch-fill" style="background: #FFFFFF; color: #D8DCE0; box-shadow: inset 0 0 0 1px #D8DCE0;"></div>
+      <div class="ds-swatch-meta">
+        <div class="name">White</div>
+        <div class="hex">#FFFFFF</div>
+        <div class="role">Cards · Containers</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ds-callout">
+    Red is structural. Reserve it for the single most important action on a screen, primary navigation states, brand marks, and accent details that need to feel sharp. Avoid red on red, decorative reds, or red as a background for body copy. When in doubt, ink wins.
+  </div>
+</section>
+
+<!-- ============================================
+     TYPOGRAPHY
+     ============================================ -->
+<section class="ds-section" id="typography">
+  <div class="ds-section-header">
+    <div class="ds-section-number">§ 03 / Typography</div>
+    <div>
+      <h2 class="ds-section-title">Type System</h2>
+      <p class="ds-section-sub">Archivo carries the brand — confident, geometric, with enough character to feel built rather than generated. Archivo Narrow handles dense industrial labels. JetBrains Mono handles metadata, numbers, and technical specs.</p>
+    </div>
+  </div>
+
+  <div class="ds-type-stack">
+    <div class="ds-type-row">
+      <div class="ds-type-label"><strong>Display / H1</strong>Hero headlines</div>
+      <div class="type-h1">Buildings that work.</div>
+      <div class="ds-type-spec">Archivo 800 · 72/95 · -0.035em</div>
+    </div>
+    <div class="ds-type-row">
+      <div class="ds-type-label"><strong>Display / H2</strong>Section titles</div>
+      <div class="type-h2">The MacMiller Way</div>
+      <div class="ds-type-spec">Archivo 800 · 48/102 · -0.030em</div>
+    </div>
+    <div class="ds-type-row">
+      <div class="ds-type-label"><strong>Display / H3</strong>Subsections</div>
+      <div class="type-h3">Local Experts. Local Solutions.</div>
+      <div class="ds-type-spec">Archivo 700 · 30/115 · -0.015em</div>
+    </div>
+    <div class="ds-type-row">
+      <div class="ds-type-label"><strong>Eyebrow</strong>Section labels</div>
+      <div class="type-eyebrow">Culture · 13 Locations · Featured</div>
+      <div class="ds-type-spec">JetBrains Mono 600 · 13.6 · 0.2em</div>
+    </div>
+    <div class="ds-type-row">
+      <div class="ds-type-label"><strong>Lede</strong>Intro paragraphs</div>
+      <div class="type-lede">We don't just make buildings work — we make them smarter, healthier, more efficient.</div>
+      <div class="ds-type-spec">Archivo 400 · 21.6/150</div>
+    </div>
+    <div class="ds-type-row">
+      <div class="ds-type-label"><strong>Body</strong>Long-form copy</div>
+      <div class="type-body">For sixty years, we've done more than build complex mechanical systems — we've built lasting relationships throughout the Pacific Northwest.</div>
+      <div class="ds-type-spec">Archivo 400 · 16/160</div>
+    </div>
+    <div class="ds-type-row">
+      <div class="ds-type-label"><strong>Caption</strong>Captions · Tags</div>
+      <div class="type-caption">SeaTac, WA · Mechanical · 2025</div>
+      <div class="ds-type-spec">Archivo Narrow 500 · 12.8 · 0.1em</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     SPACING
+     ============================================ -->
+<section class="ds-section">
+  <div class="ds-section-header">
+    <div class="ds-section-number">§ 04 / Spacing</div>
+    <div>
+      <h2 class="ds-section-title">Scale</h2>
+      <p class="ds-section-sub">A 4px base unit. The scale doubles or near-doubles at each step — gives layouts a clear rhythm without arbitrary in-between values.</p>
+    </div>
+  </div>
+
+  <div class="ds-spacing">
+    <div class="ds-spacing-row"><div class="ds-spacing-name">XS</div><div class="ds-spacing-px">4 PX</div><div class="ds-spacing-bar" style="width: 4px;"></div></div>
+    <div class="ds-spacing-row"><div class="ds-spacing-name">SM</div><div class="ds-spacing-px">8 PX</div><div class="ds-spacing-bar" style="width: 8px;"></div></div>
+    <div class="ds-spacing-row"><div class="ds-spacing-name">MD</div><div class="ds-spacing-px">16 PX</div><div class="ds-spacing-bar" style="width: 16px;"></div></div>
+    <div class="ds-spacing-row"><div class="ds-spacing-name">LG</div><div class="ds-spacing-px">24 PX</div><div class="ds-spacing-bar" style="width: 24px;"></div></div>
+    <div class="ds-spacing-row"><div class="ds-spacing-name">XL</div><div class="ds-spacing-px">40 PX</div><div class="ds-spacing-bar" style="width: 40px;"></div></div>
+    <div class="ds-spacing-row"><div class="ds-spacing-name">2XL</div><div class="ds-spacing-px">64 PX</div><div class="ds-spacing-bar" style="width: 64px;"></div></div>
+    <div class="ds-spacing-row"><div class="ds-spacing-name">3XL</div><div class="ds-spacing-px">96 PX</div><div class="ds-spacing-bar" style="width: 96px;"></div></div>
+    <div class="ds-spacing-row"><div class="ds-spacing-name">4XL</div><div class="ds-spacing-px">160 PX</div><div class="ds-spacing-bar" style="width: 160px;"></div></div>
+  </div>
+</section>
+
+<!-- ============================================
+     BUTTONS
+     ============================================ -->
+<section class="ds-section" id="components">
+  <div class="ds-section-header">
+    <div class="ds-section-number">§ 05 / Components</div>
+    <div>
+      <h2 class="ds-section-title">Buttons</h2>
+      <p class="ds-section-sub">Sharp corners, generous tap targets, kerned uppercase labels. The right-arrow glyph is a brand signature — borrowed directly from the site's CTA pattern.</p>
+    </div>
+  </div>
+
+  <div class="ds-btn-grid">
+    <div class="ds-btn-cell">
+      <div class="ds-btn-tag">Primary</div>
+      <a href="#" class="btn btn-primary">Join Our Team <span class="btn-arrow"></span></a>
+    </div>
+    <div class="ds-btn-cell">
+      <div class="ds-btn-tag">Secondary</div>
+      <a href="#" class="btn btn-secondary">Learn More <span class="btn-arrow"></span></a>
+    </div>
+    <div class="ds-btn-cell">
+      <div class="ds-btn-tag">Ghost · Inline</div>
+      <a href="#" class="btn btn-ghost">View Projects <span class="btn-arrow"></span></a>
+    </div>
+    <div class="ds-btn-cell dark">
+      <div class="ds-btn-tag">On Dark</div>
+      <a href="#" class="btn btn-inverse">Get in Touch <span class="btn-arrow"></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     VALUES — 6 cards matching site grid
+     ============================================ -->
+<section class="ds-section">
+  <div class="ds-section-header">
+    <div class="ds-section-number">§ 06 / Patterns</div>
+    <div>
+      <h2 class="ds-section-title">Value Cards</h2>
+      <p class="ds-section-sub">The six values displayed on the About Us page — Collaboration, Community, Dedication, Fun, Innovation, Safety. The pattern works for any six-up grid of concepts: capabilities, markets, services.</p>
+    </div>
+  </div>
+
+  <div class="ds-values">
+    <div class="ds-value">
+      <div class="ds-value-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="9" r="3"/><circle cx="15" cy="15" r="3"/><path d="M9 12v3M12 9h3"/></svg>
+      </div>
+      <div class="tag">— 01 / Foundation</div>
+      <h4>Collaboration</h4>
+      <p>Diverse players, one team, a common vision. Every member is valued and brings a diversity of strengths.</p>
+    </div>
+    <div class="ds-value">
+      <div class="ds-value-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M4 21v-2a4 4 0 014-4h8a4 4 0 014 4v2"/></svg>
+      </div>
+      <div class="tag">— 02 / Belonging</div>
+      <h4>Community</h4>
+      <p>We are proud to be part of MacDonald-Miller. We build relationships and know each other as individuals.</p>
+    </div>
+    <div class="ds-value">
+      <div class="ds-value-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></svg>
+      </div>
+      <div class="tag">— 03 / Standard</div>
+      <h4>Dedication</h4>
+      <p>We execute with distinction by doing the right thing and following through on our commitments.</p>
+    </div>
+    <div class="ds-value">
+      <div class="ds-value-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>
+      </div>
+      <div class="tag">— 04 / Spirit</div>
+      <h4>Fun</h4>
+      <p>Take the work seriously, but never ourselves too seriously. Serious professionals and good-natured people.</p>
+    </div>
+    <div class="ds-value">
+      <div class="ds-value-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6M10 22h4M12 2a7 7 0 00-4 12.7c.7.7 1 1.5 1 2.3h6c0-.8.3-1.6 1-2.3A7 7 0 0012 2z"/></svg>
+      </div>
+      <div class="tag">— 05 / Edge</div>
+      <h4>Innovation</h4>
+      <p>Committed to continuous, creative problem solving. How we stay an industry leader, always challenging ourselves.</p>
+    </div>
+    <div class="ds-value">
+      <div class="ds-value-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 6v6c0 5 3.5 9.5 8 10 4.5-.5 8-5 8-10V6l-8-4z"/></svg>
+      </div>
+      <div class="tag">— 06 / Non-Negotiable</div>
+      <h4>Safety</h4>
+      <p>More than hardhats and boots — an attitude and the environment we create. Everyone goes home to their families.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     CARDS
+     ============================================ -->
+<section class="ds-section">
+  <div class="ds-section-header">
+    <div class="ds-section-number">§ 07 / Patterns</div>
+    <div>
+      <h2 class="ds-section-title">Project &amp; News Cards</h2>
+      <p class="ds-section-sub">The workhorse pattern. Shared structure across projects, capabilities, news, and team members. Market badge in MM red, eyebrow metadata in mono, headline in display.</p>
+    </div>
+  </div>
+
+  <div class="ds-cards">
+    <div class="ds-card">
+      <div class="ds-card-image">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#F4F2EE" stroke-width="1" fill="none" opacity="0.6">
+            <rect x="40" y="30" width="220" height="150"/>
+            <line x1="40" y1="60" x2="260" y2="60"/>
+            <line x1="40" y1="90" x2="260" y2="90"/>
+            <line x1="40" y1="120" x2="260" y2="120"/>
+            <line x1="40" y1="150" x2="260" y2="150"/>
+            <line x1="90" y1="30" x2="90" y2="180"/>
+            <line x1="150" y1="30" x2="150" y2="180"/>
+            <line x1="210" y1="30" x2="210" y2="180"/>
+          </g>
+        </svg>
+        <span class="badge">Commercial</span>
+      </div>
+      <div class="ds-card-body">
+        <div class="ds-card-eyebrow">Project · Design-Build</div>
+        <h4>T-Mobile Headquarters</h4>
+        <p style="color: var(--mm-steel); font-size: 0.95rem;">Award-winning mechanical systems for a 1.3M SF campus.</p>
+        <div class="ds-card-meta">
+          <span>Bellevue, WA</span>
+          <span class="arrow">→</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-card-image healthcare">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#F4F2EE" stroke-width="1" fill="none" opacity="0.5">
+            <path d="M150 40 v120 M90 100 h120"/>
+            <circle cx="150" cy="100" r="60"/>
+            <circle cx="150" cy="100" r="40"/>
+          </g>
+        </svg>
+        <span class="badge">Healthcare</span>
+      </div>
+      <div class="ds-card-body">
+        <div class="ds-card-eyebrow">Project · Design-Assist</div>
+        <h4>Providence Swedish North Tower</h4>
+        <p style="color: var(--mm-steel); font-size: 0.95rem;">HVAC, plumbing, and BIM coordination for a critical hospital expansion.</p>
+        <div class="ds-card-meta">
+          <span>Seattle, WA</span>
+          <span class="arrow">→</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ds-card">
+      <div class="ds-card-image energy">
+        <svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="#F4F2EE" stroke-width="1.2" fill="none" opacity="0.5">
+            <path d="M50 160 L100 80 L150 130 L200 50 L250 100"/>
+            <circle cx="100" cy="80" r="4" fill="#F4F2EE"/>
+            <circle cx="200" cy="50" r="4" fill="#F4F2EE"/>
+          </g>
+        </svg>
+        <span class="badge">Sustainability</span>
+      </div>
+      <div class="ds-card-body">
+        <div class="ds-card-eyebrow">News · MacMiller Climate</div>
+        <h4>The Climate Pledge, One Year In</h4>
+        <p style="color: var(--mm-steel); font-size: 0.95rem;">Leading the charge on net-zero mechanical systems across the PNW.</p>
+        <div class="ds-card-meta">
+          <span>April 22, 2026</span>
+          <span class="arrow">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FORM
+     ============================================ -->
+<section class="ds-section">
+  <div class="ds-section-header">
+    <div class="ds-section-number">§ 08 / Patterns</div>
+    <div>
+      <h2 class="ds-section-title">Form Inputs</h2>
+      <p class="ds-section-sub">Bordered inputs sit on paper, focus into white with a red ring. Labels are short mono uppercase — engineered-feeling, but quiet.</p>
+    </div>
+  </div>
+
+  <form class="ds-form" onsubmit="event.preventDefault();">
+    <div class="ds-field">
+      <label>First Name <span class="req">*</span></label>
+      <input type="text" placeholder="Jordan">
+    </div>
+    <div class="ds-field">
+      <label>Last Name <span class="req">*</span></label>
+      <input type="text" placeholder="Rivera">
+    </div>
+    <div class="ds-field">
+      <label>Company</label>
+      <input type="text" placeholder="JLL">
+    </div>
+    <div class="ds-field">
+      <label>Project Type</label>
+      <select>
+        <option>Commercial &amp; Mixed-Use</option>
+        <option>Healthcare</option>
+        <option>Data Center</option>
+        <option>Life Science &amp; Biotech</option>
+      </select>
+    </div>
+    <div class="ds-field full">
+      <label>Tell Us About Your Project <span class="req">*</span></label>
+      <textarea placeholder="Site, scope, timeline, anything that helps us understand the job…"></textarea>
+    </div>
+    <div class="full" style="display: flex; gap: 1rem; align-items: center; padding-top: 0.5rem;">
+      <button type="submit" class="btn btn-primary">Send Message <span class="btn-arrow"></span></button>
+      <span class="type-caption" style="color: var(--mm-steel);">We'll respond within one business day.</span>
+    </div>
+  </form>
+</section>
+
+<!-- ============================================
+     ICONS
+     ============================================ -->
+<section class="ds-section">
+  <div class="ds-section-header">
+    <div class="ds-section-number">§ 09 / Iconography</div>
+    <div>
+      <h2 class="ds-section-title">Icons</h2>
+      <p class="ds-section-sub">Line icons, 2px stroke, 24×24 grid. Geometric, square caps, no rounded corners. The system uses red icons as small wayfinding accents — phone, contact, customer portal — just like the live site.</p>
+    </div>
+  </div>
+
+  <div class="ds-icons">
+    <div class="ds-icon-cell">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg>
+      <div class="label">Phone</div>
+    </div>
+    <div class="ds-icon-cell">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v12H6l-2 4z"/></svg>
+      <div class="label">Contact</div>
+    </div>
+    <div class="ds-icon-cell">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14"/><path d="M3 9h18M7 13h4"/></svg>
+      <div class="label">Portal</div>
+    </div>
+    <div class="ds-icon-cell">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 7v6c0 5 3.5 9 8 10 4.5-1 8-5 8-10V7l-8-5z"/></svg>
+      <div class="label">Safety</div>
+    </div>
+    <div class="ds-icon-cell">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 00-8 8c0 6 8 12 8 12s8-6 8-12a8 8 0 00-8-8z"/></svg>
+      <div class="label">Location</div>
+    </div>
+    <div class="ds-icon-cell">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18"/><path d="M3 9h18M9 3v18"/></svg>
+      <div class="label">Project</div>
+    </div>
+    <div class="ds-icon-cell">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+      <div class="label">Systems</div>
+    </div>
+    <div class="ds-icon-cell">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.2 4.2l4.3 4.3M15.5 15.5l4.3 4.3M1 12h6M17 12h6M4.2 19.8l4.3-4.3M15.5 8.5l4.3-4.3"/></svg>
+      <div class="label">Energy</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     VOICE
+     ============================================ -->
+<section class="ds-section" id="voice">
+  <div class="ds-section-header">
+    <div class="ds-section-number">§ 10 / Voice</div>
+    <div>
+      <h2 class="ds-section-title">Voice &amp; Tone</h2>
+      <p class="ds-section-sub">Confident, plain-spoken, and built on craft. We are tradespeople and engineers, not marketers. We respect the reader's time and intelligence — we don't oversell.</p>
+    </div>
+  </div>
+
+  <div class="ds-voice">
+    <div class="ds-voice-col do">
+      <h5>Do</h5>
+      <ul>
+        <li>Lead with people. "The team behind the team" beats "industry-leading solutions" every time.</li>
+        <li>Use direct, working-class English. Short sentences. Real verbs.</li>
+        <li>Earn claims with specifics — sixty years, 1,500 experts, 13 locations, 100,000 SF prefab shop.</li>
+        <li>Name the hard part. "Tight timelines. Aging infrastructure. Shifting codes." Then say how we lean in.</li>
+        <li>Sign off with action: a phone number, an address, an invitation.</li>
+      </ul>
+    </div>
+    <div class="ds-voice-col dont">
+      <h5>Don't</h5>
+      <ul>
+        <li>Don't use "solutions," "leverage," "synergy," or any other corporate filler. Say what you mean.</li>
+        <li>Don't write hero copy without a verb in the first three words.</li>
+        <li>Don't use exclamation points. The work is the emphasis.</li>
+        <li>Don't hedge with "we strive to" or "we aim to." Either we do it or we don't.</li>
+        <li>Don't treat the trades as a brand prop. The hardhat is a real piece of gear.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="ds-callout">
+    "From replacing little hot water coils to building the latest 60-story high-rise — I know that everyone at MacMiller is the best, takes pride in their work, and has my best interests in mind."
+    <cite>— Forest Faulkner, Chief Engineer at JLL</cite>
+  </div>
+</section>
+
+<!-- ============================================
+     CTA STRIP — signature site pattern
+     ============================================ -->
+<section class="ds-section">
+  <div class="ds-section-header">
+    <div class="ds-section-number">§ 11 / Patterns</div>
+    <div>
+      <h2 class="ds-section-title">CTA Strip</h2>
+      <p class="ds-section-sub">A high-contrast section closer used at the bottom of every page. Combines a headline, a phone number, and a primary action — borrowed directly from the live site's "Ready to Start? Get in Touch."</p>
+    </div>
+  </div>
+
+  <div class="ds-cta-strip">
+    <div>
+      <h3>Ready to Start? <span>Get in Touch.</span></h3>
+      <p style="color: var(--mm-zinc); margin-top: 0.75rem; max-width: 50ch;">Twenty-four-hour service line, real humans on the other end. Or send a message and we'll route it to the right team.</p>
+    </div>
+    <div class="phone-row">
+      <small>24-Hour Service</small>
+      <a href="tel:+18009625979" class="phone">800.962.5979</a>
+      <a href="#" class="btn btn-inverse" style="margin-top: 0.5rem;">Join the Team <span class="btn-arrow"></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer class="ds-foot">
+  <div>MacDonald-Miller Design System · <strong>v1.0.0</strong></div>
+  <div>Reverse-engineered from <strong>macmiller.com</strong></div>
+  <div>Pacific Northwest · <strong>Est. 1965</strong></div>
+</footer>
+
+</body>
+</html>
